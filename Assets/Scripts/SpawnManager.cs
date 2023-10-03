@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpawnManager : MonoBehaviour
+{
+    // Start is called before the first frame update
+    [SerializeField]
+    private GameObject _enemyPrefab;
+    
+    [SerializeField]
+    private GameObject[] _powerUps;
+    
+    [SerializeField]
+    private GameObject _enemyContainer;
+
+    [SerializeField]
+    private bool _stopSpawning = false;
+
+    private float randomLocation;
+   
+
+    void Start()
+    {
+        _stopSpawning = false;
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerUpRoutine());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    IEnumerator SpawnEnemyRoutine()
+    {
+        while (_stopSpawning == false)
+        {
+            Vector3 randomLocation = new Vector3(Random.Range(-15f, 15f), 8f, 0f);
+            GameObject newEnemy = Instantiate(_enemyPrefab, randomLocation, Quaternion.identity);
+            newEnemy.transform.parent = _enemyContainer.transform;
+            Debug.Log("Enemy is Spawning");
+            yield return new WaitForSeconds(5);
+        }
+    }
+    IEnumerator SpawnPowerUpRoutine()
+    {
+        while (_stopSpawning == false)
+        {
+            
+            Vector3 randomLocation = new Vector3(Random.Range(-8f, 8f), 8f, 0);
+            int randomPowerup = Random.Range(0, 3);
+            GameObject newPowerUp = Instantiate(_powerUps[randomPowerup], randomLocation, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3f, 7f));
+        }
+    }
+    
+    public void OnPlayerDeath()        
+    {
+        {
+            _stopSpawning = true;
+        }
+    }
+}
