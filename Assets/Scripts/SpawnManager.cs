@@ -19,10 +19,10 @@ public class SpawnManager : MonoBehaviour
 
     private float randomLocation;
    
+      
 
-    void Start()
+    public void StartSpawning()
     {
-        _stopSpawning = false;
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerUpRoutine());
     }
@@ -35,17 +35,18 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
+        yield return new WaitForSeconds(3.0f);
         while (_stopSpawning == false)
         {
             Vector3 randomLocation = new Vector3(Random.Range(-15f, 15f), 8f, 0f);
             GameObject newEnemy = Instantiate(_enemyPrefab, randomLocation, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
-            Debug.Log("Enemy is Spawning");
             yield return new WaitForSeconds(5);
         }
     }
     IEnumerator SpawnPowerUpRoutine()
     {
+        yield return new WaitForSeconds(3.0f);
         while (_stopSpawning == false)
         {
             

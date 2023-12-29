@@ -27,6 +27,10 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private GameObject _rightEngine;
+    [SerializeField]
+    private GameObject _leftEngine;
     private SpawnManager _spawnManager;
 
     [SerializeField]
@@ -77,8 +81,11 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-                       
+        
+        
         transform.Translate(direction * _speed * Time.deltaTime);
+        
+        
         
         if (transform.position.y >= 0)
         {
@@ -136,6 +143,16 @@ public class Player : MonoBehaviour
         _lives--; //lives = _lives - 1
         _uiManager.UpdateLives(_lives);
 
+        if (_lives == 2)
+        {
+            _rightEngine.SetActive(true);
+        }
+
+        if (_lives == 1)
+        {
+            _leftEngine.SetActive(true);
+        }
+
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
@@ -159,17 +176,14 @@ public class Player : MonoBehaviour
     }
     public void SpeedBoostActivate()
     {
-        if (_speedBoostActive == true)
-        {
-            _speed = _speed * _speedboost;
-        }
-        
+        _speedBoostActive = true;
+        _speed *= _speedboost;
         StartCoroutine(SpeedBoostCoolDownRoutine());        
     }
     IEnumerator SpeedBoostCoolDownRoutine()
     {
        yield return new WaitForSeconds(5.0f);
        _speedBoostActive = false;
-       _speed = _speed / _speedboost;
+       _speed /= _speedboost;
     }
  }
