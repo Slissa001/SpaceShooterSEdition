@@ -41,6 +41,10 @@ public class Player : MonoBehaviour
     private bool _tripleShotActive = false;
     private bool _speedBoostActive = true;
     private bool _playerShieldActive = false;
+
+    [SerializeField]
+    private AudioClip _lasersfx;
+    private AudioSource _audiosource;
     
 
     void Start()
@@ -60,6 +64,17 @@ public class Player : MonoBehaviour
         if (_uiManager == null)
         {
             Debug.LogError("The UI Manager is NULL");
+        }
+
+        _audiosource = GetComponent<AudioSource>();
+
+        if (_audiosource == null)
+        {
+            Debug.LogError("The audio source for the Player is NULL");
+        }
+        else
+        {
+            _audiosource.clip = _lasersfx;
         }
         
                
@@ -118,6 +133,9 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
         }
+
+        _audiosource.Play();
+        //play laser audioclip here
     }
     public void AddScore(int points)
     {
