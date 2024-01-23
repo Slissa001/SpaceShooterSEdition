@@ -13,11 +13,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
-    private float _speedboost = 2.0f;
+    private float _speedBoost = 2.0f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
-    private GameObject _tripleshotprefab;
+    private GameObject _tripleshotPrefab;
     [SerializeField]
     private GameObject _shieldVisualizer;
     private Vector3 _tripleshotOffset = new Vector3(0, -1.05f, 0);
@@ -43,8 +43,8 @@ public class Player : MonoBehaviour
     private bool _playerShieldActive = false;
 
     [SerializeField]
-    private AudioClip _lasersfx;
-    private AudioSource _audiosource;
+    private AudioClip _laserSFX;
+    private AudioSource _audioSource;
     
 
     void Start()
@@ -66,15 +66,15 @@ public class Player : MonoBehaviour
             Debug.LogError("The UI Manager is NULL");
         }
 
-        _audiosource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
 
-        if (_audiosource == null)
+        if (_audioSource == null)
         {
             Debug.LogError("The audio source for the Player is NULL");
         }
         else
         {
-            _audiosource.clip = _lasersfx;
+            _audioSource.clip = _laserSFX;
         }
         
                
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
         CalculateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            fireLaser();
+            FireLaser();
         }
 
     }
@@ -120,21 +120,21 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(13, transform.position.y, 0);
         }
     }
-    void fireLaser()
+    void FireLaser()
     {
 
         _canFire = Time.time + _fireRate;
 
         if (_tripleShotActive == true)
         {
-            Instantiate(_tripleshotprefab, transform.position + _tripleshotOffset, Quaternion.identity);
+            Instantiate(_tripleshotPrefab, transform.position + _tripleshotOffset, Quaternion.identity);
         }
         else
         {
             Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
         }
 
-        _audiosource.Play();
+        _audioSource.Play();
         //play laser audioclip here
     }
     public void AddScore(int points)
@@ -195,13 +195,13 @@ public class Player : MonoBehaviour
     public void SpeedBoostActivate()
     {
         _speedBoostActive = true;
-        _speed *= _speedboost;
+        _speed *= _speedBoost;
         StartCoroutine(SpeedBoostCoolDownRoutine());        
     }
     IEnumerator SpeedBoostCoolDownRoutine()
     {
        yield return new WaitForSeconds(5.0f);
        _speedBoostActive = false;
-       _speed /= _speedboost;
+       _speed /= _speedBoost;
     }
  }

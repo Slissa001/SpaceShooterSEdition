@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     private float _canFire = -1.0f;
     private Animator _anim;
     [SerializeField]
-    private AudioClip _enemyexplodefx;
+    private AudioClip _enemyExplodefx;
     private AudioSource _audioSource;
 
 
@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
             Debug.LogError("The Audiosource for the Enemy is NULL");
         }
 
-        _audioSource.clip = _enemyexplodefx;
+        _audioSource.clip = _enemyExplodefx;
     }
 
     // Update is called once per frame

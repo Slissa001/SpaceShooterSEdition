@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     private int _score;
 
     [SerializeField]
-    private Image _LivesImg;
+    private Image _livesImg;
 
     [SerializeField]
     private Sprite[] _liveSprites;
@@ -24,6 +24,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private TMP_Text _restart;
+
+    [SerializeField]
+    private TMP_Text _esc;
 
     private GameManager _gameManager;
 
@@ -42,6 +45,7 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score " + 0;
         _gameOver.gameObject.SetActive(false);
         _restart.gameObject.SetActive(false);
+        _esc.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -58,7 +62,7 @@ public class UIManager : MonoBehaviour
     {
         //display img sprites
         //give it a new one based on the currentLives index
-        _LivesImg.sprite = _liveSprites[currentLives];
+        _livesImg.sprite = _liveSprites[currentLives];
         if (currentLives == 0)
         {
             GameOverSequence();
@@ -70,6 +74,7 @@ public class UIManager : MonoBehaviour
         _gameManager.GameOver();
         _gameOver.gameObject.SetActive(true);
         _restart.gameObject.SetActive(true);
+        _esc.gameObject.SetActive(true);
         StartCoroutine(FlickerTime());
     }
     IEnumerator FlickerTime()

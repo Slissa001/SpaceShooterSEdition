@@ -147,9 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6ec2a6657299642ab6e2e5b66a493b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _powersfx: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _powerSFX: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   _speed: 3
-  _powerupID: 1
+  _powerUpID: 1
 --- !u!95 &5002934861467093396
 Animator:
   serializedVersion: 5
