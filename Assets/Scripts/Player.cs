@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         //take the current position = new position (0, 0, 0)
         transform.position = new Vector3(0, 0, 0);
 
-        _shieldRenderer = this.transform.Find("Shield_Visualizer").GetComponent<SpriteRenderer>();
+        _shieldRenderer = this.transform.Find("Shield_visualizer").GetComponent<SpriteRenderer>();
 
         if (_shieldRenderer == null)
         {
@@ -171,6 +171,7 @@ public class Player : MonoBehaviour
         _playerShieldActive = true;
         _shieldVisualizer.SetActive(true);
         _shieldLife = 3;
+        _shieldRenderer.color = Color.blue;
     }
     
     public void Damage()
