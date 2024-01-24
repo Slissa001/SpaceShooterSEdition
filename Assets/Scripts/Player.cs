@@ -34,7 +34,16 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
 
     [SerializeField]
+    private int _thrusterBoost = 2;
+
+    [SerializeField]
     private int _score;
+
+    [SerializeField]
+    private int _shieldLife = 3;
+
+    [SerializeField]
+    private SpriteRenderer _shieldRenderer;
 
     private UIManager _uiManager; 
     
@@ -51,7 +60,14 @@ public class Player : MonoBehaviour
     {
         //take the current position = new position (0, 0, 0)
         transform.position = new Vector3(0, 0, 0);
-        
+
+        _shieldRenderer = this.transform.Find("Shield_Visualizer").GetComponent<SpriteRenderer>();
+
+        if (_shieldRenderer == null)
+        {
+            Debug.Log("The Renderer is NULL");
+        }
+
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
         if (_spawnManager == null)
@@ -100,7 +116,14 @@ public class Player : MonoBehaviour
         
         transform.Translate(direction * _speed * Time.deltaTime);
         
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _speed *= _thrusterBoost;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _speed /= _thrusterBoost;
+        }
         
         if (transform.position.y >= 0)
         {
@@ -147,17 +170,35 @@ public class Player : MonoBehaviour
     {
         _playerShieldActive = true;
         _shieldVisualizer.SetActive(true);
+        _shieldLife = 3;
     }
     
     public void Damage()
     {
-        if (_playerShieldActive == true)
+        if (_playerShieldActive == true && _shieldLife > 0)
         {
-            _playerShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            _shieldLife--;
+
+            switch (_shieldLife)
+            {
+                case 0:
+                    _playerShieldActive = false;
+                    _shieldVisualizer.SetActive(false);
+                    break;
+                case 1:
+                    _shieldRenderer.color = Color.red;
+                    break;
+                case 2:
+                    _shieldRenderer.color = Color.yellow;
+                    break;
+                case 3:
+                    _shieldRenderer.color = Color.blue;
+                    break;
+            }
             return;
         }
-        
+
+                                
         _lives--; //lives = _lives - 1
         _uiManager.UpdateLives(_lives);
 
@@ -204,4 +245,5 @@ public class Player : MonoBehaviour
        _speedBoostActive = false;
        _speed /= _speedBoost;
     }
+  
  }

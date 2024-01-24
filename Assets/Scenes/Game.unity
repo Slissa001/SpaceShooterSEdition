@@ -436,7 +436,10 @@ MonoBehaviour:
   _lives: 3
   _rightEngine: {fileID: 1491425371}
   _leftEngine: {fileID: 854315898}
+  _thrusterBoost: 2
   _score: 0
+  _shieldLife: 3
+  _shieldRenderer: {fileID: 2062709054}
   _laserSFX: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
 --- !u!212 &325883730
 SpriteRenderer:
