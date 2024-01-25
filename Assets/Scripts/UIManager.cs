@@ -9,9 +9,12 @@ public class UIManager : MonoBehaviour
     //create a handle to text
     [SerializeField]
     private TMP_Text _scoreText;
-    
+
     [SerializeField]
+    private TMP_Text _ammoText;
+    
     private int _score;
+    private int _ammo;
 
     [SerializeField]
     private Image _livesImg;
@@ -24,6 +27,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private TMP_Text _restart;
+
+    [SerializeField]
+    private TMP_Text _outOfBullets;
 
     [SerializeField]
     private TMP_Text _esc;
@@ -43,6 +49,7 @@ public class UIManager : MonoBehaviour
         }
 
         _scoreText.text = "Score " + 0;
+        _ammoText.text = "Ammo " + 15;
         _gameOver.gameObject.SetActive(false);
         _restart.gameObject.SetActive(false);
         _esc.gameObject.SetActive(false);
@@ -52,6 +59,11 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void UpdateAmmo(int myAmmo)
+    {
+        _ammoText.text = "Ammo: " + myAmmo.ToString();
     }
     public void UpdateScore(int playerScore)
     {

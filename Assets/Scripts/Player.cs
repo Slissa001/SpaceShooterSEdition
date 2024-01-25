@@ -43,10 +43,13 @@ public class Player : MonoBehaviour
     private int _shieldLife = 3;
 
     [SerializeField]
+    public int _ammo = 15;
+
+    [SerializeField]
     private SpriteRenderer _shieldRenderer;
 
-    private UIManager _uiManager; 
-    
+    private UIManager _uiManager;
+
     private bool _tripleShotActive = false;
     private bool _speedBoostActive = true;
     private bool _playerShieldActive = false;
@@ -54,7 +57,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _laserSFX;
     private AudioSource _audioSource;
-    
+
 
     void Start()
     {
@@ -92,8 +95,8 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSFX;
         }
-        
-               
+
+
     }
 
     // Update is called once per frame
@@ -102,6 +105,10 @@ public class Player : MonoBehaviour
         CalculateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
+            if (_ammo == 0)
+            {
+                return;
+            }
             FireLaser();
         }
 
@@ -112,10 +119,10 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        
-        
+
+
         transform.Translate(direction * _speed * Time.deltaTime);
-        
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             _speed *= _thrusterBoost;
@@ -124,7 +131,7 @@ public class Player : MonoBehaviour
         {
             _speed /= _thrusterBoost;
         }
-        
+
         if (transform.position.y >= 0)
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
@@ -145,7 +152,7 @@ public class Player : MonoBehaviour
     }
     void FireLaser()
     {
-
+        _ammo --;
         _canFire = Time.time + _fireRate;
 
         if (_tripleShotActive == true)
@@ -159,6 +166,13 @@ public class Player : MonoBehaviour
 
         _audioSource.Play();
         //play laser audioclip here
+                
+    }
+
+    public void MinusAmmo(int bullets)
+    {
+        _ammo -= bullets;
+        _uiManager.UpdateAmmo(_ammo);
     }
     public void AddScore(int points)
     {
