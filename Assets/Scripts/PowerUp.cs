@@ -16,11 +16,15 @@ public class PowerUp : MonoBehaviour
     // 0 = Triple Shot
     // 1 = Speed
     // 2 = Shields
+    // 3 = Ammo
+    // 5 = Health
 
     [SerializeField]
     private int _powerUpID;
 
     Player player;
+
+    private UIManager _uiManager;
     void Start()
     {
         
@@ -57,6 +61,12 @@ public class PowerUp : MonoBehaviour
                         break;
                     case 2:
                         player.ShieldActive();
+                        break;
+                    case 3:
+                        player.AmmoRenewActivate();
+                        break;
+                    case 4:
+                        player.AddLife();
                         break;
                     default:
                         Debug.Log("Default Value");

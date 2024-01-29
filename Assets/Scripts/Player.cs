@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     private bool _tripleShotActive = false;
     private bool _speedBoostActive = true;
     private bool _playerShieldActive = false;
+    
 
     [SerializeField]
     private AudioClip _laserSFX;
@@ -64,6 +65,7 @@ public class Player : MonoBehaviour
         //take the current position = new position (0, 0, 0)
         transform.position = new Vector3(0, 0, 0);
 
+        
         _shieldRenderer = this.transform.Find("Shield_visualizer").GetComponent<SpriteRenderer>();
 
         if (_shieldRenderer == null)
@@ -107,10 +109,13 @@ public class Player : MonoBehaviour
         {
             if (_ammo == 0)
             {
+                _uiManager.OutOfBullets();
                 return;
             }
             FireLaser();
         }
+           
+        
 
     }
     void CalculateMovement()
@@ -153,6 +158,7 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         _ammo --;
+        _uiManager.UpdateAmmo(_ammo);
         _canFire = Time.time + _fireRate;
 
         if (_tripleShotActive == true)
@@ -168,12 +174,7 @@ public class Player : MonoBehaviour
         //play laser audioclip here
                 
     }
-
-    public void MinusAmmo(int bullets)
-    {
-        _ammo -= bullets;
-        _uiManager.UpdateAmmo(_ammo);
-    }
+     
     public void AddScore(int points)
     {
         _score += points;
@@ -233,6 +234,12 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void AddLife()
+    {
+        _lives += 1;
+        _uiManager.UpdateLives(_lives);
+    }
     
     public void tripleShotActivate()
     {
@@ -259,6 +266,12 @@ public class Player : MonoBehaviour
        yield return new WaitForSeconds(5.0f);
        _speedBoostActive = false;
        _speed /= _speedBoost;
+    }
+
+    public void AmmoRenewActivate()
+    {
+        _ammo = 15;
+        _uiManager.UpdateAmmo(_ammo);
     }
   
  }

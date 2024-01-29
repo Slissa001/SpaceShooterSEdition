@@ -53,6 +53,7 @@ public class UIManager : MonoBehaviour
         _gameOver.gameObject.SetActive(false);
         _restart.gameObject.SetActive(false);
         _esc.gameObject.SetActive(false);
+        _outOfBullets.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -61,10 +62,34 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void UpdateAmmo(int myAmmo)
+    public void UpdateAmmo(int bullets)
     {
-        _ammoText.text = "Ammo: " + myAmmo.ToString();
+        _ammoText.text = "Ammo:  " + bullets.ToString();
     }
+
+    public void OutOfBullets()
+    {
+        _outOfBullets.gameObject.SetActive(true);
+        StartCoroutine(OutOfBulletsFlick());
+    }
+
+    public void MoreBullets()
+    {
+        _outOfBullets.gameObject.SetActive(false);
+    }
+
+    IEnumerator OutOfBulletsFlick()
+    {
+        while(_outOfBullets == true)
+        {
+            _outOfBullets.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+
+            _outOfBullets.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+    
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore.ToString();
